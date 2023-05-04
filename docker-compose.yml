@@ -1,0 +1,25 @@
+version: '3.8'
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - 8101:8101
+    volumes:
+      - .:/code
+    command: ["./wait-for-mysql.sh", "db", "bash", "boot.sh"]
+    depends_on:
+      - db
+    env_file:
+      - .env
+      - .mysqlenv
+  db:
+    image: mysql:8
+    restart: always
+    env_file: .mysqlenv
+    volumes:
+      - /tmp/app/mysqld:/var/run/mysqld
+      - .dbdata:/var/lib/mysql
+    ports:
+      - 3306:3306
