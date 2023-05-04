@@ -11,6 +11,10 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
 from pathlib import Path
+import os
+
+from .secrets import Config
+from .environments import ALLOWED_ENVS, ENV_LOCAL, ENV_PROD
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -25,6 +29,13 @@ SECRET_KEY = 'django-insecure-)fnl#4^%6ghbt+mq$i32n56=9a)%=xe9(1zhohi)uvb=nvxa#3
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
+# Current ENVIRONMENT config
+ARHOLDINGSAPI_ENV= os.environ.get('ARHOLDINGSAPI_ENV', ENV_LOCAL)
+if ARHOLDINGSAPI_ENV == ENV_PROD:
+    DEBUG = False
+if ARHOLDINGSAPI_ENV not in ALLOWED_ENVS:
+    raise Exception('ARHOLDINGSAPI_ENV must be on of ({})'.format(ALLOWED_ENVS))
+
 ALLOWED_HOSTS = []
 
 
@@ -37,6 +48,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'rest_framework',
 ]
 
 MIDDLEWARE = [
@@ -73,12 +85,26 @@ WSGI_APPLICATION = 'catalogueapi.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+Config.set_database_credentials(env=ARHOLDINGSAPI_ENV)
+
+if not Config.DATABASE_CRED:
+    raise Exception("Can not setup database configuration for {} not defined".format(ARHOLDINGSAPI_ENV))
+
+if ARHOLDINGSAPI_ENV in ALLOWED_ENVS:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.mysql',
+            'NAME': Config.DATABASE_CRED['NAME'],
+            'USER': Config.DATABASE_CRED['USER'],
+            'PASSWORD': Config.DATABASE_CRED['PASSWORD'],
+            'HOST': Config.DATABASE_CRED['HOST'],
+            'PORT': Config.DATABASE_CRED['PORT'],
+            'ATOMIC_REQUESTS': True
+        }
     }
-}
+else:
+    raise Exception("Database configuration for {} not defined".format(ARHOLDINGSAPI_ENV))
+
 
 
 # Password validation
