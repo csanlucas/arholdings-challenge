@@ -134,3 +134,6 @@ dmypy.json
 
 .dbdata
 .vscode
+
+# Data products files
+*_data.csv
