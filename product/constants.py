@@ -26,3 +26,7 @@ SHOPIFY_PRODUCT_VALIDS_STATUS = [
 ]
 
 DEFAULT_VISIBILITY = 'visible'
+
+# RATE LIMITS Documentation https://shopify.dev/docs/api/admin-rest#rate_limits
+ADMIN_RATE_LIMIT_NUMBER_REQ_BY_SECOND = 2
+ADMIN_RATE_LIMIT_NUMBER_REQ_BY_MINUTE = 40
