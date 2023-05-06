@@ -9,6 +9,10 @@ load_dotenv(dotenv_path=f'{basedir}/../.env')
 class Config():
     DATABASE_CRED = None
 
+    SHOPIFY_ACCESS_TOKEN = os.environ.get('SHOPIFY_ACCESS_TOKEN')
+    SHOPIFY_STORE = os.environ.get('SHOPIFY_STORE')
+    SHOPIFY_API_URL_ROOT = f'https://{SHOPIFY_STORE}.myshopify.com/admin/api/2022-10/'
+
     @staticmethod
     def set_database_credentials(env=''):
         cred = None

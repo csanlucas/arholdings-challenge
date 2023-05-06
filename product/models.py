@@ -54,3 +54,15 @@ class Product(models.Model):
     download_1_url = models.CharField(max_length=500)
     download_2_name = models.CharField(max_length=100)
     download_2_url = models.CharField(max_length=500)
+
+    class Meta:
+        ordering = ["-id"]
+
+
+class ShopifySyncStatus(models.Model):
+    product = models.OneToOneField(Product, on_delete=models.PROTECT)
+    last_updated = models.DateTimeField(null=True)
+    shopify_product_id = models.CharField(max_length=200)
+
+    class Meta:
+        ordering = ['product']
