@@ -15,3 +15,18 @@ NUMERIC_COLUMNS_CSV = ['published', 'is featured?', 'in stock?', 'stock', 'backo
                        'sale price', 'regular price', 'download expiry days']
 
 MAX_BATCH_INSERT_PRODUCTS_ITEM = 500
+
+PRODUCT_ACTIVE_STATUS = 'active'
+PRODUCT_DRAFT_STATUS = 'draft'
+PRODUCT_ARCHIVED_STATUS = 'archived'
+SHOPIFY_PRODUCT_VALIDS_STATUS = [
+    PRODUCT_ACTIVE_STATUS,
+    PRODUCT_ARCHIVED_STATUS,
+    PRODUCT_DRAFT_STATUS
+]
+
+DEFAULT_VISIBILITY = 'visible'
+
+# RATE LIMITS Documentation https://shopify.dev/docs/api/admin-rest#rate_limits
+ADMIN_RATE_LIMIT_NUMBER_REQ_BY_SECOND = 2
+ADMIN_RATE_LIMIT_NUMBER_REQ_BY_MINUTE = 40
