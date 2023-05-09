@@ -1,0 +1,5 @@
+MYSQL_DATABASE=arholdingsdb
+MYSQL_USER=development
+MYSQL_PASSWORD=devaccps
+MYSQL_ROOT_PASSWORD=devroot
+MYSQL_HOST=''
