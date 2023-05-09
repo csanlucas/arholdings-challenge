@@ -145,7 +145,7 @@ endpoints
 
 ---
 
-#### Listar productos en base de datos local [Requisito Extra]
+#### Listar productos en base de datos local. [Requisito Extra]
 * **URL** : http://localhost:8101/products/
 * **Method** `GET`
 * **Success Response:**
@@ -173,7 +173,7 @@ endpoints
     ```
 ---
 
-#### Buscar producto mediante propiedades name, sku, id_source(catalogo)
+#### Buscar producto mediante propiedades name, sku, id_source(catalogo). [Requisito Extra]
 * **URL** : http://localhost:8101/products/
 * **Method** `GET`
 * **URL Params:**

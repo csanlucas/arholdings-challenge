@@ -36,7 +36,10 @@ if ARHOLDINGSAPI_ENV == ENV_PROD:
 if ARHOLDINGSAPI_ENV not in ALLOWED_ENVS:
     raise Exception('ARHOLDINGSAPI_ENV must be on of ({})'.format(ALLOWED_ENVS))
 
-ALLOWED_HOSTS = []
+if ARHOLDINGSAPI_ENV == ENV_LOCAL:
+    ALLOWED_HOSTS = ['*']
+else:
+    ALLOWED_HOSTS = []
 
 
 # Application definition
@@ -49,6 +52,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
+    'corsheaders',
     'django_filters',
     'product',
 ]
@@ -57,6 +61,7 @@ MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
@@ -148,6 +153,9 @@ STATIC_URL = 'static/'
 REST_FRAMEWORK = {
     'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend']
 }
+
+if ARHOLDINGSAPI_ENV == ENV_LOCAL:
+    CORS_ORIGIN_ALLOW_ALL = True
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
