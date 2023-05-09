@@ -55,6 +55,14 @@ class Product(models.Model):
     download_2_name = models.CharField(max_length=100)
     download_2_url = models.CharField(max_length=500)
 
+    @property
+    def shopify_sync_data(self):
+        try:
+            return self.shopifysyncstatus
+        except ShopifySyncStatus.DoesNotExist:
+            pass
+        return None
+
     class Meta:
         ordering = ["-id"]
 
